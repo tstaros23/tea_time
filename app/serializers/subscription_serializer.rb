@@ -14,4 +14,20 @@ class SubscriptionSerializer
       ]
     }
   end
+
+  def self.format_multiple(subscriptions)
+    {
+      type: 'subscription',
+      data:
+      subscriptions.map do |obj|
+        {id: obj.id,
+         customer_id: obj.customer_id,
+         title: obj.title,
+         price: obj.price,
+         status: obj.status,
+         frequency: obj.frequency
+        }
+      end
+    }
+  end
 end

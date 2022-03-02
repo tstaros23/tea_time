@@ -1,4 +1,8 @@
 class Api::V1::SubscriptionsController < ApplicationController
+  def index
+    subscriptions = Subscription.all
+    render json: SubscriptionSerializer.format_multiple(subscriptions)
+  end
   def create
     subscription = Subscription.new(subscription_params)
       if subscription.save
