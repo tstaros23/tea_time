@@ -8,9 +8,19 @@ class Api::V1::SubscriptionsController < ApplicationController
       end
   end
 
+  def destroy
+    if Subscription.exists?(params[:id])
+      subscription = Subscription.find(params[:id])
+      subscription.destroy
+      render json: SubscriptionSerializer.format_single(subscription), status: :ok
+    else
+      render json: {errors: {details: "Subscription doesn't exist"}}
+    end
+  end
+
   private
 
-  def subscription_params
-    params.permit(:title, :price, :status, :frequency, :customer_id)
-  end
+    def subscription_params
+      params.permit(:title, :price, :status, :frequency, :customer_id)
+    end
 end
