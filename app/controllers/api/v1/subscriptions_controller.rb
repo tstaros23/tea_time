@@ -3,6 +3,7 @@ class Api::V1::SubscriptionsController < ApplicationController
     subscriptions = Subscription.all
     render json: SubscriptionSerializer.format_multiple(subscriptions)
   end
+
   def create
     subscription = Subscription.new(subscription_params)
       if subscription.save
@@ -11,7 +12,18 @@ class Api::V1::SubscriptionsController < ApplicationController
         render json: {errors: {details: "Invalid subscription details"}}, status: :bad_request
       end
   end
+  def update
+    if Subscription.exists?(params[:id])
+      subscription = Subscription.find(params[:id])
+      if subscription.status == 'Active'
+        subscription.update(status: 'Cancelled')
+      end
+      render json: SubscriptionSerializer.format_single(subscription), status: :ok
+    else
+      render json: {errors: {details: "Subscription doesnt exist"}}, status: :not_found
+    end
 
+  end
   def destroy
     if Subscription.exists?(params[:id])
       subscription = Subscription.find(params[:id])
@@ -22,7 +34,7 @@ class Api::V1::SubscriptionsController < ApplicationController
     end
   end
 
-  private
+  # private
 
     def subscription_params
       params.permit(:title, :price, :status, :frequency, :customer_id)

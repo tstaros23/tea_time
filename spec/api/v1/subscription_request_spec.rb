@@ -17,7 +17,6 @@ require 'rails_helper'
       post :create, params: subscription_params
       created_subscription = Subscription.last
 
-      expect(response).to be_successful
       expect(response.status).to eq(201)
      end
    end
@@ -46,6 +45,25 @@ require 'rails_helper'
 
        expect(response).to be_successful
        expect(response.status).to eq(200)
+     end
+   end
+
+   describe 'PATCH /api/v1/subscriptions/:id' do
+     it "should update a subscription to cancelled" do
+
+       customer = Customer.create!(first_name: 'Ted', last_name: 'Staros', email: 'tstaros23@gmail.com', address: '11 Revere Dr.')
+       subscription = Subscription.create!(customer_id: customer.id, title: 'Tea Monthly', price: 52, status: 'Active', frequency: 'Monthly' )
+
+       expect(subscription.status).to_not eq('Cancelled')
+
+       patch :update, params: { id: subscription.id}
+
+       expect(response).to be_successful
+       expect(response.status).to eq(200)
+
+       json_subscription = JSON.parse(response.body, symbolize_names: true)
+
+       expect(json_subscription[:data][0][:status]).to eq("Cancelled")
      end
    end
  end
