@@ -21,14 +21,14 @@ require 'rails_helper'
      end
    end
 
-   describe 'GET /api/v1/subscriptions' do
+   describe 'GET /api/v1/customers/:customer_id/subscriptions' do
      it "should get a list of subscriptions" do
        customer = Customer.create!(first_name: 'Ted', last_name: 'Staros', email: 'tstaros23@gmail.com', address: '11 Revere Dr.')
-       subscription = Subscription.create!(customer_id: customer.id, title: 'Tea Monthly', price: 52, status: 'Active', frequency: 'Monthly' )
-       subscription2 = Subscription.create!(customer_id: customer.id, title: 'Tea weekly', price: 46, status: 'Active', frequency: 'Weekly' )
+       subscription = Subscription.create!(customer_id: customer.id, title: 'Tea Monthly', price: 52, status: 0, frequency: 'Monthly' )
+       subscription2 = Subscription.create!(customer_id: customer.id, title: 'Tea weekly', price: 46, status: 0, frequency: 'Weekly' )
        subscription3 = Subscription.create!(customer_id: customer.id, title: 'Tea Monthly', price: 54, status: 'Cancelled', frequency: 'Monthly' )
 
-       get :index
+       get :index, params: {customer_id: customer.id}
 
        expect(response).to be_successful
        expect(response.status).to eq(200)
@@ -39,11 +39,11 @@ require 'rails_helper'
      it "should update a subscription to cancelled" do
 
        customer = Customer.create!(first_name: 'Ted', last_name: 'Staros', email: 'tstaros23@gmail.com', address: '11 Revere Dr.')
-       subscription = Subscription.create!(customer_id: customer.id, title: 'Tea Monthly', price: 52, status: 'Active', frequency: 'Monthly' )
+       subscription = Subscription.create!(customer_id: customer.id, title: 'Tea Monthly', price: 52, status: 0, frequency: 'Monthly' )
 
        expect(subscription.status).to_not eq('Cancelled')
 
-       patch :update, params: { id: subscription.id}
+       patch :update, params: { customer_id: customer.id, id: subscription.id}
 
        expect(response).to be_successful
        expect(response.status).to eq(200)
