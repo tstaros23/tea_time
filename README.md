@@ -11,6 +11,9 @@ Tea Time is a take-home back-end application that exposes an API to support the 
 3. Run `rails db:{drop,create,migrate}` to set up the database.
 4. To consume Tea Time endpoints locally, run `rails s` and navigate to `localhost:3000`
 
+### Schema ###
+![Tea Time Schema](./downloads/Tea_Time_Schema.png)
+
 ### Endpoints ###
 
 *Notes:*
