@@ -12,7 +12,8 @@ Tea Time is a take-home back-end application that exposes an API to support the 
 4. To consume Tea Time endpoints locally, run `rails s` and navigate to `localhost:3000`
 
 ### Schema ###
-![Tea Time Schema](~Downloads/Tea_Time_Schema.png)
+![Tea_Time_Schema](https://user-images.githubusercontent.com/81131454/157545413-7e9f6a17-4e4e-4ae2-a72b-76d43d0c48b5.png)
+
 
 ### Endpoints ###
 
