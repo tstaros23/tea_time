@@ -15,7 +15,7 @@ Tea Time is a take-home back-end application that exposes an API to support the 
 
 *Notes:*
 
-*Status for events are defined as `enum : {"Active" => 0, "Cancelled" => 1}`. Either the string or the integer may be used when referring to categories.*
+*Status for events are defined as `enum : {"Active" => 0, "Cancelled" => 1}`. The default status is 0. Either the string or the integer may be used when referring to categories.*
 
 **Subscriptions**
   
@@ -82,9 +82,9 @@ Sample Body:
 
 ```
 Request Patch `/api/v1/customer/:customer_id/subscriptions/:id` to update a new customer subscription from `Active` to `Cancelled`
-Query params: `?title=Tea Monthly&price=52&frequency=Monthly`
 
-Returns the updated customer subscription.
+Returns the updated customer subscription. The subscription status is changed from `Active` to `Cancelled`.
+Accepts no query params.
 
 Sample Body:
 ```
