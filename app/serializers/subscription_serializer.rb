@@ -5,7 +5,6 @@ class SubscriptionSerializer
       data: [
         {
           id: subscription.id,
-          customer_id: subscription.customer_id,
           title: subscription.title,
           price: subscription.price,
           status: subscription.status,
@@ -21,7 +20,6 @@ class SubscriptionSerializer
       data:
       subscriptions.map do |obj|
         {id: obj.id,
-         customer_id: obj.customer_id,
          title: obj.title,
          price: obj.price,
          status: obj.status,

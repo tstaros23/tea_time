@@ -6,7 +6,8 @@ class Api::V1::SubscriptionsController < ApplicationController
   end
 
   def create
-    subscription = Subscription.new(subscription_params)
+    customer = Customer.find(params[:customer_id])
+    subscription = customer.subscriptions.new(subscription_params)
       if subscription.save
         render json: SubscriptionSerializer.format_single(subscription), status: :created
       else
@@ -14,20 +15,21 @@ class Api::V1::SubscriptionsController < ApplicationController
       end
   end
   def update
-    if Subscription.exists?(params[:id])
-      subscription = Subscription.find(params[:id])
+    customer = Customer.find(params[:customer_id])
+    if customer.present?
+      subscription = customer.subscriptions.find_by(id: params[:id])
       if subscription.status == 'Active'
         subscription.update(status: 1)
       end
       render json: SubscriptionSerializer.format_single(subscription), status: :ok
     else
-      render json: {errors: {details: "Subscription doesnt exist"}}, status: :not_found
+      render json: {errors: {details: "Customer doesnt exist"}}, status: :not_found
     end
   end
 
-  # private
+  private
 
     def subscription_params
-      params.permit(:title, :price, :status, :frequency, :customer_id)
+      params.permit(:title, :price, :status, :frequency)
     end
 end

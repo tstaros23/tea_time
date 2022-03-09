@@ -16,6 +16,10 @@ require 'rails_helper'
 
       post :create, params: subscription_params
       created_subscription = Subscription.last
+      expect(created_subscription.title).to eq('Tea Monthly')
+      expect(created_subscription.price).to eq(52)
+      expect(created_subscription.status).to eq('Active')
+      expect(created_subscription.frequency).to eq('Monthly')
 
       expect(response.status).to eq(201)
      end
